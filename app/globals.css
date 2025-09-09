@@ -1,0 +1,137 @@
+/* globals.css */
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: false; /* Disable default themes */
+}
+
+/* We need these dummy colors for activating custom color variables */
+@theme {
+  --color-border: green;
+  --color-dark-bg: green;
+}
+
+@plugin "daisyui/theme" {
+  name: "yda-theme";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(97% 0 0);
+  --color-base-300: oklch(92% 0 0);
+  --color-base-content: oklch(20% 0 0);
+  --color-primary: #ffed00;
+  --color-primary-content: oklch(42% 0.095 57.708);
+  --color-secondary: #f70002;
+  --color-secondary-content: oklch(40% 0.123 38.172);
+  --color-accent: oklch(0% 0 0);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(37% 0.01 67.558);
+  --color-neutral-content: oklch(92% 0.003 48.717);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(39% 0.09 240.876);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(70% 0.191 22.216);
+  --color-error-content: oklch(39% 0.141 25.723);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
+  /* Other custom variables */
+  --color-border: #e5e7eb;
+  --nav-height: 73px;
+}
+
+/* New dark theme */
+@plugin "daisyui/theme" {
+  name: "yda-theme-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(25.33% 0.016 252.42);
+  --color-base-200: oklch(23.26% 0.014 253.1);
+  --color-base-300: oklch(21.15% 0.012 254.09);
+  --color-base-content: oklch(97.807% 0.029 256.847);
+  --color-primary: #ffed00;
+  --color-primary-content: oklch(42% 0.095 57.708);
+  --color-secondary: #f70002;
+  --color-secondary-content: oklch(40% 0.123 38.172);
+  --color-accent: oklch(77% 0.152 181.912);
+  --color-accent-content: oklch(38% 0.063 188.416);
+  --color-neutral: oklch(14% 0.005 285.823);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
+  /* Other custom variables */
+  --color-border: #474e57;
+  --nav-height: 73px;
+}
+
+[data-theme="yda-theme"] {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overscroll-behavior: none;
+  }
+  /* Hide the default clear (x) icon in WebKit browsers */
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+  .input:has(> input:disabled) {
+    cursor: not-allowed;
+    border: 1px solid var(--input-color) !important;
+  }
+  input {
+    @apply text-base-content;
+  }
+}
+
+[data-theme="yda-theme-dark"] {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* @apply bg-dark-bg; */
+    overscroll-behavior: none;
+  }
+  /* Hide the default clear (x) icon in WebKit browsers */
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+  .input:has(> input:disabled) {
+    cursor: not-allowed;
+    border: 1px solid var(--input-color) !important;
+  }
+  input {
+    @apply text-base-content;
+  }
+}

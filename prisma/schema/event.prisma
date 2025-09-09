@@ -1,0 +1,38 @@
+enum EventType {
+  TRAINING
+  RACE
+  WORKSHOP
+}
+
+model Event {
+  id           String   @id @default(uuid())
+  title        String?
+  location     String?
+  startTime    DateTime @map("start_time")
+  endTime      DateTime @map("end_time")
+  seats        Int?
+  targetGroups String?  @map("target_groups")
+  description String?
+
+  eventType     EventType
+  registrations EventRegistration[]
+  // setupLogs     SetupLog[]
+
+  @@map("events")
+}
+
+model EventRegistration {
+  id                String  @id @default(uuid())
+  eventId           String? @map("event_id")
+  registeredById    String? @map("registered_by_id")
+  approved          Boolean @default(false)
+  orderedComponents String? @map("ordered_components")
+
+  event    Event?  @relation(fields: [eventId], references: [id])
+  driverId String? @map("driver_id")
+  driver   User?   @relation("DriverEventRegistration", fields: [driverId], references: [id])
+
+  registeredBy User? @relation("RegisteredBy", fields: [registeredById], references: [id])
+
+  @@map("event_registrations")
+}

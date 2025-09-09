@@ -1,0 +1,30 @@
+
+// model SetupTemplate {
+//   id           String  @id @default(uuid())
+//   name         String?
+//   templateData Json?   @map("template_data")
+
+//   setupLogs SetupLog[]
+
+//   @@map("setup_templates")
+// }
+
+// model SetupLog {
+//   id String @id @default(uuid())
+
+//   lapTime           String? @map("lap_time") // Interval not supported natively; stored as String
+//   feeling           String?
+//   setupDetails      Json?   @map("setup_details")
+//   weatherConditions String? @map("weather_conditions")
+
+//   driverId String? @map("driver_id")
+//   driver   User?   @relation(fields: [driverId], references: [id])
+
+//   setupTemplateId String?        @map("setup_template_id") // Fix type
+//   setupTemplate   SetupTemplate? @relation(fields: [setupTemplateId], references: [id])
+
+//   eventId String? @map("event_id") // Fix type
+//   event   Event?  @relation(fields: [eventId], references: [id])
+
+//   @@map("setup_logs")
+// }

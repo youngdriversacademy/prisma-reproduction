@@ -1,0 +1,13 @@
+generator client {
+  provider        = "prisma-client"
+  previewFeatures = ["queryCompiler", "driverAdapters"]
+  output          = "../app/generated/prisma"
+  // moduleFormat           = "esm"
+  // generatedFileExtension = "ts"
+  // importFileExtension    = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

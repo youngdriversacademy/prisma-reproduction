@@ -1,0 +1,75 @@
+model User {
+  id            String   @id @default(cuid())
+  firstName     String
+  lastName      String
+  role          Role
+  password      String
+  email         String?  @unique
+  username      String?  @unique
+  emailVerified Boolean?
+  adminApproved Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  verifyTokens VerifyToken[]
+  userSetting  UserSetting?
+
+  // Simplified notification relationships (2 relations)
+  notificationsReceived Notification[] @relation("NotificationRecipients")
+  notificationsSent     Notification[] @relation("NotificationActor")
+
+  // Parent relationship
+  children User[]  @relation("UserParent")
+  parentId String?
+  parent   User?   @relation("UserParent", fields: [parentId], references: [id])
+
+  // Event relationship
+  registrationsAsDriver EventRegistration[] @relation("DriverEventRegistration")
+
+  registrationsAsRegistrant EventRegistration[] @relation("RegisteredBy")
+
+  // Driver fields
+  birthdate   DateTime?
+  driverGroup DriverGroup?
+  // setupLogs   SetupLog[] 
+}
+
+model UserSetting {
+  id                        String   @id @default(cuid())
+  userId                    String   @unique
+  user                      User     @relation(fields: [userId], references: [id])
+  notificationPreferences   Json     @default("{}")
+  theme                     String   @default("yda-theme")
+  language                  String   @default("nl")
+  timezone                  String   @default("UTC")
+  emailNotificationsEnabled Boolean  @default(true)
+  emailFrequency            String   @default("immediate") // immediate, daily, weekly, never
+  webNotificationsEnabled   Boolean  @default(true)
+  pushNotificationsEnabled  Boolean  @default(false)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+}
+
+model VerifyToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  usedAt    DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// Enums
+enum DriverGroup {
+  MINI
+  JUNIOR
+  SENIOR
+}
+
+enum Role {
+  DRIVER
+  PARENT
+  ADMIN
+}

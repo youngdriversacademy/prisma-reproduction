@@ -1,0 +1,69 @@
+model Notification {
+  id   String           @id @default(cuid())
+  type NotificationType
+
+  status   NotificationStatus   @default(UNREAD)
+  priority NotificationPriority @default(NORMAL)
+
+  // Relationships - only 2 relations to User
+  actorId    String? // Who triggered this notification (null for system)
+  actor      User?   @relation("NotificationActor", fields: [actorId], references: [id])
+  recipients User[]  @relation("NotificationRecipients")
+
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+enum NotificationStatus {
+  UNREAD
+  READ
+  ARCHIVED
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// Core Notification System
+enum NotificationCategory {
+  EVENT
+  INVOICE
+  SETUP
+  GUIDE
+  SYSTEM
+}
+
+enum NotificationType {
+  // Event notifications
+  EVENT_REGISTRATION_SUBMITTED
+  EVENT_REGISTRATION_APPROVED
+  EVENT_REGISTRATION_REJECTED
+  EVENT_REMINDER
+  EVENT_CANCELLED
+  EVENT_UPDATED
+
+  // Invoice notifications
+  INVOICE_PENDING_CONFIRMATION
+  INVOICE_CONFIRMED
+  INVOICE_GENERATED
+
+  // Setup notifications
+  SETUP_LOG_SUBMITTED
+  SETUP_FEEDBACK_RECEIVED
+
+  // Guide notifications
+  GUIDE_ASSIGNED
+  GUIDE_UPDATED
+
+  // System notifications
+  SYSTEM_MAINTENANCE
+  ACCOUNT_CREATED
+  ROLE_CHANGED
+}
